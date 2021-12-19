@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getUserToken, purgeToken } from '../../request'
 
 enum UserType {
     SUPER_ADMIN = 'SUPER_ADMIN',
@@ -15,11 +16,11 @@ interface authState {
 }
 
 const initialState: authState = {
-    isAuthenticated: false,
+    isAuthenticated: !!getUserToken(),
     username: '',
     userType: UserType.GUEST,
     isLoading: false,
-    error: {},
+    error: '',
 }
 
 export const authSlice = createSlice({
@@ -33,9 +34,16 @@ export const authSlice = createSlice({
             state.isAuthenticated = true
             state.isLoading = false
         },
-        loginFailed: (state, { payload }) => {
-            state.error = payload
+        loginFailed: (state, action) => {
+            state.error = action.payload
             state.isLoading = false
+        },
+        clearError: (state) => {
+            state.error = ''
+        },
+        logout: (state) => {
+            purgeToken()
+            window.location.reload()
         },
     },
 })

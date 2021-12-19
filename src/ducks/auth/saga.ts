@@ -11,7 +11,11 @@ function* loginSaga({
         yield call(services.login, username.toLowerCase(), password)
         yield put(authSlice.actions.loginSuccess())
     } catch (error) {
-        yield put(authSlice.actions.loginFailed(error))
+        yield put(
+            authSlice.actions.loginFailed(
+                'Mot de passe ou utilisateur incorrect.'
+            )
+        )
     }
 }
 
