@@ -19,8 +19,6 @@ export default function DataTable({ data }: { data: Array<any> }) {
     const classes = useStyles()
     const keys = _.keys(data[0])
 
-    console.log(keys)
-
     return (
         <TableContainer component={Paper}>
             <MuiTable className={classes.table} aria-label="simple table">
@@ -28,7 +26,10 @@ export default function DataTable({ data }: { data: Array<any> }) {
                     <TableRow>
                         {_.map(keys, (value: any, key: any) =>
                             key === 0 ? (
-                                <TableCell style={{ fontWeight: 'bold' }}>
+                                <TableCell
+                                    key={key}
+                                    style={{ fontWeight: 'bold' }}
+                                >
                                     {value}
                                 </TableCell>
                             ) : (

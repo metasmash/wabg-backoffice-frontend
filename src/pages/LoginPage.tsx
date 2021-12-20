@@ -71,6 +71,8 @@ export const LoginPage = () => {
     }
 
     const handleSubmit = (event: any) => {
+        event.preventDefault()
+
         if (!isLoading) {
             dispatch(authSlice.actions.login(signInData))
         }

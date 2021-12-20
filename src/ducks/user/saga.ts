@@ -1,6 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { services } from './services'
 import { RoleType, userSlice } from './reducer'
+import { authSlice } from '../auth/reducer'
 
 function* fetchUserSaga() {
     try {
@@ -16,6 +17,8 @@ function* fetchAllUsersSaga() {
         const [...users] = yield call(services.fetchAllUsers)
         yield put(userSlice.actions.fetchAllUsersSuccess(users))
     } catch (error) {
+        yield put(userSlice.actions.fetchUserFailed())
+        yield put(authSlice.actions.logout())
         console.log(error)
     }
 }

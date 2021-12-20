@@ -15,12 +15,14 @@ interface userState {
     currentUser: User
     users: Array<User>
     error: string
+    isLoading: boolean
 }
 
 const initialState: userState = {
     currentUser: { username: '', role: RoleType.GUEST },
     users: [],
     error: '',
+    isLoading: false,
 }
 
 export const userSlice = createSlice({
@@ -35,8 +37,14 @@ export const userSlice = createSlice({
         fetchUserSuccess: (state, { payload }) => {
             state.currentUser = payload
         },
-        createAdmin: (state, { payload: { username, password } }) => {},
-        createAdminSuccess: (state, payload) => {},
+        fetchUserFailed: () => {},
+        createAdmin: (state, { payload: { username, password } }) => {
+            state.isLoading = true
+        },
+        createAdminSuccess: (state, { payload: { username, role } }) => {
+            state.isLoading = true
+            state.users = [...state.users, { username: username, role: role }]
+        },
         createSuperAdmin: (state, { payload: { username, password } }) => {},
         createSuperAdminSuccess: () => {},
         createUserFailed: (state, { payload }) => {
