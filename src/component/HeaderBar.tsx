@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import {
     AppBar,
     Box,
@@ -9,8 +8,9 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core'
+import { Link } from 'component'
 import { routes } from '../constants'
-import { useAppDispatch } from '../ducks/root/hooks'
+import { getCurrentPath } from '../ducks/root/hooks'
 
 const pages = [
     { text: 'Accueil', path: routes.HOME },
@@ -20,7 +20,7 @@ const pages = [
 
 const useStyle = makeStyles({
     typography: {
-        color: '#d5d5d5',
+        fontWeight: 500,
     },
     appBar: {
         background: '#2E3B55',
@@ -30,18 +30,26 @@ const useStyle = makeStyles({
 export const HeaderBar = () => {
     const classes = useStyle()
 
-    const history = useHistory()
-
     return (
         <AppBar className={classes.appBar} position="sticky">
             <Container maxWidth="xs">
                 <Toolbar disableGutters>
                     <Box>
                         {pages.map((page) => (
-                            <Button key={page.text}>
-                                <Typography className={classes.typography}>
-                                    {page.text}
-                                </Typography>
+                            <Button disableRipple key={page.text}>
+                                <Link to={page.path}>
+                                    <Typography
+                                        style={{
+                                            color:
+                                                getCurrentPath() === page.path
+                                                    ? '#d5d5d5'
+                                                    : '#d5d5d5a0',
+                                        }}
+                                        className={classes.typography}
+                                    >
+                                        {page.text}
+                                    </Typography>
+                                </Link>
                             </Button>
                         ))}
                     </Box>
