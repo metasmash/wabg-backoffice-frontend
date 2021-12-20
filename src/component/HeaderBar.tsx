@@ -11,6 +11,8 @@ import {
 import { Link } from 'component'
 import { routes } from '../constants'
 import { getCurrentPath } from '../ducks/root/hooks'
+import { useDispatch } from 'react-redux'
+import { authSlice } from '../ducks/auth/reducer'
 
 const pages = [
     { text: 'Accueil', path: routes.HOME },
@@ -25,14 +27,22 @@ const useStyle = makeStyles({
     appBar: {
         background: '#2E3B55',
     },
+    logout: {
+        color: '#E8554E',
+    },
 })
 
 export const HeaderBar = () => {
     const classes = useStyle()
+    const dispatch = useDispatch()
+
+    const handleLogOut = () => {
+        dispatch(authSlice.actions.logout())
+    }
 
     return (
         <AppBar className={classes.appBar} position="sticky">
-            <Container maxWidth="xs">
+            <Container>
                 <Toolbar disableGutters>
                     <Box>
                         {pages.map((page) => (
@@ -53,9 +63,13 @@ export const HeaderBar = () => {
                             </Button>
                         ))}
                     </Box>
-                    <Box style={{ right: '10px' }} sx={{ flexGrow: 0 }}>
-                        Deconnexion
-                    </Box>
+                    <div style={{ position: 'absolute', right: 0 }}>
+                        <Button onClick={handleLogOut} disableRipple>
+                            <Typography className={classes.logout}>
+                                Deconnexion
+                            </Typography>
+                        </Button>
+                    </div>
                 </Toolbar>
             </Container>
         </AppBar>

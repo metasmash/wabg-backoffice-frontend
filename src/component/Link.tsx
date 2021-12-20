@@ -3,7 +3,7 @@ import { Link as RRDLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
-    link: { textDecoration: 'none' },
+    link: { userSelect: 'none', textDecoration: 'none' },
 })
 
 export const Link = ({ ...props }) => {

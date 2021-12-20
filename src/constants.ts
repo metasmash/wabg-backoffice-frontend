@@ -4,4 +4,5 @@ export const routes = {
     LOGIN: '/login',
     TABLES: '/tables',
     USERS: '/users',
+    TABLE_DATA: '/tables/:tableName',
 }

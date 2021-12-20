@@ -2,14 +2,14 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { authSlice } from '../ducks/auth/reducer'
 import { makeStyles, Paper, Typography } from '@material-ui/core'
+import { Title } from '../component/Title'
 
 const useStyles = makeStyles({
-    title: { fontSize: '30px' },
     paper: {
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center',
-        borderRadius: '0% 0% 20% 20%',
+        borderRadius: '0% 0% 20px 20px',
         padding: '30px 30px 30px 30px',
     },
 })
@@ -24,11 +24,7 @@ export const Home = () => {
 
     return (
         <div>
-            <Paper className={classes.paper}>
-                <Typography className={classes.title}>
-                    Bienvenue sur WABG Backoffice
-                </Typography>
-            </Paper>
+            <Title> Bienvenue sur WABG Backoffice</Title>
         </div>
     )
 }

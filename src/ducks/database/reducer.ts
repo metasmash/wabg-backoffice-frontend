@@ -19,6 +19,7 @@ export const databaseSlice = createSlice({
         },
         getTablesSuccess: (state, { payload }) => {
             state.tables = payload
+            state.isLoading = false
         },
     },
 })
