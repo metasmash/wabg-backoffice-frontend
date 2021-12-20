@@ -24,9 +24,7 @@ const request = axios.create({
 })
 
 const setTokenInLocalStorage = (response: any) => {
-    console.log(response.token)
     if (!!response?.token) {
-        console.log(response.token)
         persistLogin(response.token)
     }
 
@@ -37,8 +35,6 @@ const responseMapper = (response: any) => response.data
 
 const setTokenInHeader = (config: any) => {
     const newConfig = config
-
-    console.log(getApiEndpoint())
 
     newConfig.headers['wabg-token'] = getUserToken()
 

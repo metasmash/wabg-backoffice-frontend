@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { getUserToken, purgeToken } from '../../request'
 
-enum UserType {
+enum RoleType {
     SUPER_ADMIN = 'SUPER_ADMIN',
     ADMIN = 'ADMIN',
     GUEST = '',
@@ -10,7 +10,7 @@ enum UserType {
 interface authState {
     isAuthenticated: boolean
     username: string
-    userType: UserType
+    role: RoleType
     isLoading: boolean
     error: any
 }
@@ -18,7 +18,7 @@ interface authState {
 const initialState: authState = {
     isAuthenticated: !!getUserToken(),
     username: '',
-    userType: UserType.GUEST,
+    role: RoleType.GUEST,
     isLoading: false,
     error: '',
 }
@@ -44,6 +44,11 @@ export const authSlice = createSlice({
         logout: (state) => {
             purgeToken()
             window.location.reload()
+        },
+        fetchUser: () => {},
+        fetchUserSuccess: (state, { payload }) => {
+            state.username = payload.username
+            state.role = payload.role
         },
     },
 })

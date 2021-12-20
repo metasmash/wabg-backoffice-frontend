@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
     Button,
+    CircularProgress,
     Container,
     FormControl,
     makeStyles,
@@ -9,7 +10,7 @@ import {
 } from '@material-ui/core'
 import wabgLogo from '../images/wabg-logo.png'
 import { useAppDispatch, useAppSelector } from '../ducks/root/hooks'
-import { selectAuthError } from '../ducks/auth/selector'
+import { selectAuthError, selectIsAuthLoading } from '../ducks/auth/selector'
 import { PopUp } from '../component/PopUp'
 import { authSlice } from '../ducks/auth/reducer'
 
@@ -58,6 +59,7 @@ export const LoginPage = () => {
 
     const dispatch = useAppDispatch()
     const error = useAppSelector(selectAuthError)
+    const isLoading = useAppSelector(selectIsAuthLoading)
 
     const handleChangeSignInData = (event: any) => {
         const { name, value } = event.target
@@ -112,7 +114,7 @@ export const LoginPage = () => {
                         variant="contained"
                         color="primary"
                     >
-                        Se connecter
+                        {isLoading ? <CircularProgress /> : 'Se connecter'}
                     </Button>
                 </form>
             </Paper>
