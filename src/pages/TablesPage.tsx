@@ -26,7 +26,7 @@ export const TablesPage = () => {
 
     return (
         <div>
-            <Title> Présentation des tables </Title>
+            <Title> Editer une tables </Title>
             <Grid container>
                 {_.map(tables, (table, key) => {
                     return (

@@ -14,11 +14,13 @@ export enum RoleType {
 interface userState {
     currentUser: User
     users: Array<User>
+    error: string
 }
 
 const initialState: userState = {
     currentUser: { username: '', role: RoleType.GUEST },
     users: [],
+    error: '',
 }
 
 export const userSlice = createSlice({
@@ -32,6 +34,16 @@ export const userSlice = createSlice({
         fetchUser: () => {},
         fetchUserSuccess: (state, { payload }) => {
             state.currentUser = payload
+        },
+        createAdmin: (state, { payload: { username, password } }) => {},
+        createAdminSuccess: (state, payload) => {},
+        createSuperAdmin: (state, { payload: { username, password } }) => {},
+        createSuperAdminSuccess: () => {},
+        createUserFailed: (state, { payload }) => {
+            state.error = payload
+        },
+        clearErrors: (state) => {
+            state.error = ''
         },
     },
 })

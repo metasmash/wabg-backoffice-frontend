@@ -7,4 +7,11 @@ export const services = {
     fetchUser() {
         return request.get('/user/me')
     },
+    createSuperAdmin(username: string, password: string) {
+        return request.post('/user/createSuperAdmin', { username, password })
+    },
+    createAdmin(username: string, password: string) {
+        return request.post('/user/createAdmin', { username, password })
+    },
+    createUserFailed: () => {},
 }
