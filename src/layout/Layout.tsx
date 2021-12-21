@@ -5,7 +5,6 @@ const useStyles = makeStyles({
     paper: {
         display: 'flex',
         flexDirection: 'column',
-        textAlign: 'center',
         borderRadius: '0% 0% 20px 20px',
         padding: '30px 30px 70px 30px',
         marginBottom: 50,
