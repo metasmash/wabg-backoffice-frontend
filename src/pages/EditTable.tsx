@@ -5,7 +5,10 @@ import { IconButton } from '@material-ui/core'
 import { Title } from '../component/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import { databaseSlice } from '../ducks/database/reducer'
-import { selectCurrentTable } from '../ducks/database/selector'
+import {
+    selectCurrentTable,
+    selectIsDatabaseLoading,
+} from '../ducks/database/selector'
 import DataTable from '../component/DataTable'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { Link } from '../component'
@@ -89,6 +92,7 @@ const tables = [
 export const EditTable = () => {
     const dispatch = useDispatch()
     const currentTable = useSelector(selectCurrentTable)
+    const isLoading = useSelector(selectIsDatabaseLoading)
 
     const params: any = useParams()
 
@@ -116,7 +120,7 @@ export const EditTable = () => {
             <Title style={{ textAlign: 'center' }}>
                 Editer une table: {tableName}
             </Title>
-            {!!currentTable && <DataTable data={currentTable} />}
+            {!!currentTable && !isLoading && <DataTable data={currentTable} />}
             {!!getIframeSrc(tableName) && (
                 <iframe
                     style={{ width: '100%', height: 600 }}
