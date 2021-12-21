@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
 import _ from 'lodash'
 import { useParams } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core'
+import { IconButton, makeStyles } from '@material-ui/core'
 import { Title } from '../component/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import { databaseSlice } from '../ducks/database/reducer'
 import { selectCurrentTable } from '../ducks/database/selector'
 import DataTable from '../component/DataTable'
+import ArrowBack from '@material-ui/icons/ArrowBack'
+import { Link } from '../component'
+import { routes } from '../constants'
 
 const useStyles = makeStyles({})
 
@@ -86,12 +89,9 @@ const tables = [
 ]
 
 export const EditTable = () => {
-    const classes = useStyles()
-
     const dispatch = useDispatch()
     const currentTable = useSelector(selectCurrentTable)
 
-    console.log(currentTable)
     const params: any = useParams()
 
     const { tableName } = params
@@ -108,7 +108,16 @@ export const EditTable = () => {
 
     return (
         <div>
-            <Title>Edit table: {tableName}</Title>
+            <div style={{ position: 'absolute' }}>
+                <Link to={routes.TABLES}>
+                    <IconButton>
+                        <ArrowBack style={{ fontSize: 40 }} />
+                    </IconButton>
+                </Link>
+            </div>
+            <Title style={{ textAlign: 'center' }}>
+                Edit table: {tableName}
+            </Title>
             {!!currentTable && <DataTable data={currentTable} />}
             {!!getIframeSrc(tableName) && (
                 <iframe

@@ -11,7 +11,7 @@ export const TablesPage = () => {
 
     return (
         <div>
-            <Title> Editer une table</Title>
+            <Title style={{ textAlign: 'center' }}>Editer une table</Title>
             <Grid container>
                 {_.map(tables, (table, key) => {
                     return (

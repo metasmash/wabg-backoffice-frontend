@@ -5,9 +5,10 @@ import { useAppSelector } from '../ducks/root/hooks'
 import { selectAllUsers, selectCurrentUser } from '../ducks/user/selector'
 import { RoleType, userSlice } from '../ducks/user/reducer'
 import DataTable from '../component/DataTable'
-import { Button, Grid, TextField } from '@material-ui/core'
+import { Button, Grid, IconButton, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
+import Delete from '@material-ui/icons/Delete'
 
 const useStyle = makeStyles({
     layout: {
@@ -22,7 +23,9 @@ export const UsersPage = () => {
         password: '',
     })
 
-    const { role: currentUserRole } = useAppSelector(selectCurrentUser)
+    const { username: currentUserName, role: currentUserRole } = useAppSelector(
+        selectCurrentUser
+    )
 
     const dispatch = useDispatch()
 
@@ -50,19 +53,22 @@ export const UsersPage = () => {
     const addActions = (users: any) =>
         _.map(users, (user) => ({
             ...user,
-            action: (
-                <div>
-                    <Button
-                        onClick={() => {
-                            dispatch(
-                                userSlice.actions.deleteUser(user.username)
-                            )
-                        }}
-                    >
-                        delete
-                    </Button>
-                </div>
-            ),
+            action:
+                user.username !== currentUserName ? (
+                    <div>
+                        <IconButton
+                            onClick={() => {
+                                dispatch(
+                                    userSlice.actions.deleteUser(user.username)
+                                )
+                            }}
+                        >
+                            <Delete style={{ color: '#E8554E' }} />
+                        </IconButton>
+                    </div>
+                ) : (
+                    <div />
+                ),
         }))
 
     const handleKeyPress = (event: any) => {
