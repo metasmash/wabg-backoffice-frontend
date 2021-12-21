@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { routes } from '../constants'
 import { useAppDispatch, useAppSelector } from '../ducks/root/hooks'
@@ -12,13 +12,17 @@ export function ProtectedRoute({ ...props }) {
     const isAuthenticated = useAppSelector(selectIsAuthenticated)
     const dispatch = useAppDispatch()
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(userSlice.actions.fetchUser())
+            dispatch(databaseSlice.actions.getTables())
+            dispatch(userSlice.actions.fetchAllUsers())
+        }
+    }, [])
+
     if (!isAuthenticated) {
         return <Redirect to={routes.LOGIN} />
     }
-
-    dispatch(userSlice.actions.fetchUser())
-    dispatch(databaseSlice.actions.getTables())
-    dispatch(userSlice.actions.fetchAllUsers())
 
     return (
         <>

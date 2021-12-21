@@ -46,8 +46,8 @@ export const HeaderBar = () => {
                 <Toolbar disableGutters>
                     <Box>
                         {pages.map((page) => (
-                            <Button disableRipple key={page.text}>
-                                <Link to={page.path}>
+                            <Link key={page.text} to={page.path}>
+                                <Button disableRipple>
                                     <Typography
                                         style={{
                                             color:
@@ -59,8 +59,8 @@ export const HeaderBar = () => {
                                     >
                                         {page.text}
                                     </Typography>
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
                     <div style={{ position: 'absolute', right: 0 }}>
