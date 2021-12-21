@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import _ from 'lodash'
 import { useParams } from 'react-router-dom'
-import { IconButton, makeStyles } from '@material-ui/core'
+import { IconButton } from '@material-ui/core'
 import { Title } from '../component/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import { databaseSlice } from '../ducks/database/reducer'
@@ -10,8 +10,6 @@ import DataTable from '../component/DataTable'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { Link } from '../component'
 import { routes } from '../constants'
-
-const useStyles = makeStyles({})
 
 const tables = [
     {
