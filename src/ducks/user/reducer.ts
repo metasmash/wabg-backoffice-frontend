@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import _ from 'lodash'
 
 type User = {
     username: string
@@ -49,6 +50,20 @@ export const userSlice = createSlice({
         createSuperAdminSuccess: () => {},
         createUserFailed: (state, { payload }) => {
             state.error = payload
+        },
+        deleteUser: (state, { payload }) => {
+            state.isLoading = true
+        },
+        deleteUserSuccess: (state, { payload }) => {
+            state.isLoading = false
+            state.users = _.filter(
+                state.users,
+                (user) => user.username != payload
+            )
+        },
+        deleteUserFailed: (state) => {
+            state.isLoading = true
+            state.error = 'You cannot delete this user.'
         },
         clearErrors: (state) => {
             state.error = ''

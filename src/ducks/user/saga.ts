@@ -44,8 +44,19 @@ function* createAdminSaga({
     }
 }
 
+function* deleteUserSaga({ payload }: { payload: string }) {
+    try {
+        yield call(services.deleteUser, payload.toLowerCase())
+        yield put(userSlice.actions.deleteUserSuccess(payload))
+    } catch (error) {
+        console.log(error)
+        yield put(userSlice.actions.deleteUserFailed())
+    }
+}
+
 export function* watchUser() {
     yield takeLatest(userSlice.actions.fetchUser, fetchUserSaga)
     yield takeLatest(userSlice.actions.fetchAllUsers, fetchAllUsersSaga)
     yield takeLatest(userSlice.actions.createAdmin, createAdminSaga)
+    yield takeLatest(userSlice.actions.deleteUser, deleteUserSaga)
 }

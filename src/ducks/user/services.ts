@@ -13,5 +13,7 @@ export const services = {
     createAdmin(username: string, password: string) {
         return request.post('/user/createAdmin', { username, password })
     },
-    createUserFailed: () => {},
+    deleteUser(username: string) {
+        return request.delete(`/user/${username}`)
+    },
 }

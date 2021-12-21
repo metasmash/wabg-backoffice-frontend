@@ -2,16 +2,10 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import { Title } from '../component/Title'
 import { useAppSelector } from '../ducks/root/hooks'
-import { selectAllUsers } from '../ducks/user/selector'
+import { selectAllUsers, selectCurrentUser } from '../ducks/user/selector'
 import { RoleType, userSlice } from '../ducks/user/reducer'
 import DataTable from '../component/DataTable'
-import {
-    Button,
-    CircularProgress,
-    FormControl,
-    Grid,
-    TextField,
-} from '@material-ui/core'
+import { Button, Grid, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
 
@@ -27,6 +21,8 @@ export const UsersPage = () => {
         username: '',
         password: '',
     })
+
+    const { role: currentUserRole } = useAppSelector(selectCurrentUser)
 
     const dispatch = useDispatch()
 
@@ -51,6 +47,30 @@ export const UsersPage = () => {
         dispatch(userSlice.actions.createAdmin(createUserData))
     }
 
+    const addActions = (users: any) =>
+        _.map(users, (user) => ({
+            ...user,
+            action: (
+                <div>
+                    <Button
+                        onClick={() => {
+                            dispatch(
+                                userSlice.actions.deleteUser(user.username)
+                            )
+                        }}
+                    >
+                        delete
+                    </Button>
+                </div>
+            ),
+        }))
+
+    const handleKeyPress = (event: any) => {
+        if (event.key === 'Enter') {
+            handleCreateAdmin()
+        }
+    }
+
     return (
         <div className={classes.layout}>
             <Title>Users page</Title>
@@ -66,12 +86,20 @@ export const UsersPage = () => {
                 <>
                     <Title marginBottom={20}>Admins</Title>
                     <div>
-                        <DataTable data={adminUsers} />
+                        <DataTable
+                            data={
+                                currentUserRole === RoleType.SUPER_ADMIN ||
+                                RoleType.ADMIN
+                                    ? addActions(adminUsers)
+                                    : adminUsers
+                            }
+                        />
                     </div>
                     <Grid container style={{ marginTop: 30 }}>
                         <Grid item xs={5}>
                             <TextField
                                 fullWidth
+                                onKeyPress={handleKeyPress}
                                 onChange={handleChangeCreateAdminData}
                                 name="username"
                                 id="username"
@@ -83,6 +111,7 @@ export const UsersPage = () => {
                         <Grid item xs={5}>
                             <TextField
                                 fullWidth
+                                onKeyPress={handleKeyPress}
                                 onChange={handleChangeCreateAdminData}
                                 name="password"
                                 type="text"
