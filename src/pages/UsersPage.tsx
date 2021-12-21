@@ -79,14 +79,16 @@ export const UsersPage = () => {
 
     return (
         <div className={classes.layout}>
-            <Title>Users page</Title>
+            <Title style={{ textAlign: 'center' }}>
+                Gestion des utilisateurs
+            </Title>
             {!!superAdminUsers && (
-                <>
+                <div style={{ marginBottom: 40 }}>
                     <Title marginBottom={20}>Super admins</Title>
                     <div>
                         <DataTable data={superAdminUsers} />
                     </div>
-                </>
+                </div>
             )}
             {!!adminUsers && (
                 <>
