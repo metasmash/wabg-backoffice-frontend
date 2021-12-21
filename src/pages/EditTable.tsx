@@ -114,7 +114,7 @@ export const EditTable = () => {
                 </Link>
             </div>
             <Title style={{ textAlign: 'center' }}>
-                Edit table: {tableName}
+                Editer une table: {tableName}
             </Title>
             {!!currentTable && <DataTable data={currentTable} />}
             {!!getIframeSrc(tableName) && (
