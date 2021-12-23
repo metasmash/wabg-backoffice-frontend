@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import {
     AppBar,
     Box,
@@ -9,8 +8,11 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core'
+import { Link } from 'component'
 import { routes } from '../constants'
-import { useAppDispatch } from '../ducks/root/hooks'
+import { getCurrentPath } from '../ducks/root/hooks'
+import { useDispatch } from 'react-redux'
+import { authSlice } from '../ducks/auth/reducer'
 
 const pages = [
     { text: 'Accueil', path: routes.HOME },
@@ -20,34 +22,54 @@ const pages = [
 
 const useStyle = makeStyles({
     typography: {
-        color: '#d5d5d5',
+        fontWeight: 500,
     },
     appBar: {
         background: '#2E3B55',
+    },
+    logout: {
+        color: '#E8554E',
     },
 })
 
 export const HeaderBar = () => {
     const classes = useStyle()
+    const dispatch = useDispatch()
 
-    const history = useHistory()
+    const handleLogOut = () => {
+        dispatch(authSlice.actions.logout())
+    }
 
     return (
         <AppBar className={classes.appBar} position="sticky">
-            <Container maxWidth="xs">
+            <Container>
                 <Toolbar disableGutters>
                     <Box>
                         {pages.map((page) => (
-                            <Button key={page.text}>
-                                <Typography className={classes.typography}>
-                                    {page.text}
-                                </Typography>
-                            </Button>
+                            <Link key={page.text} to={page.path}>
+                                <Button disableRipple>
+                                    <Typography
+                                        style={{
+                                            color:
+                                                getCurrentPath() === page.path
+                                                    ? '#d5d5d5'
+                                                    : '#d5d5d5a0',
+                                        }}
+                                        className={classes.typography}
+                                    >
+                                        {page.text}
+                                    </Typography>
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
-                    <Box style={{ right: '10px' }} sx={{ flexGrow: 0 }}>
-                        Deconnexion
-                    </Box>
+                    <div style={{ position: 'absolute', right: 0 }}>
+                        <Button onClick={handleLogOut} disableRipple>
+                            <Typography className={classes.logout}>
+                                Deconnexion
+                            </Typography>
+                        </Button>
+                    </div>
                 </Toolbar>
             </Container>
         </AppBar>

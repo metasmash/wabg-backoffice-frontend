@@ -19,16 +19,6 @@ function* loginSaga({
     }
 }
 
-function* fetchUserSaga() {
-    try {
-        const { role, username } = yield call(services.fetchUser)
-        yield put(authSlice.actions.fetchUserSuccess({ role, username }))
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 export function* watchAuth() {
     yield takeLatest(authSlice.actions.login, loginSaga)
-    yield takeLatest(authSlice.actions.fetchUser, fetchUserSaga)
 }

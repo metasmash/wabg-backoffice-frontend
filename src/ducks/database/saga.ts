@@ -11,6 +11,16 @@ function* getTablesSaga() {
     }
 }
 
+function* getTableByNameSaga({ payload }: { payload: any }) {
+    try {
+        const [...tables] = yield call(services.getTableByName, payload)
+        yield put(databaseSlice.actions.getTableByNameSuccess(tables))
+    } catch (error) {
+        yield put(databaseSlice.actions.getTableByNameFailed)
+    }
+}
+
 export function* watchDatabase() {
     yield takeLatest(databaseSlice.actions.getTables, getTablesSaga)
+    yield takeLatest(databaseSlice.actions.getTableByName, getTableByNameSaga)
 }

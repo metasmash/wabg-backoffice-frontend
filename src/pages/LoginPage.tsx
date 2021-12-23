@@ -35,7 +35,7 @@ const useStyles = makeStyles({
         padding: '10px 10px 20px 10px',
     },
     textField: {
-        margin: '10px 10px 25px 10px',
+        margin: '0px 0px 30px 0px',
     },
     logo: {
         objectFit: 'contain',
@@ -72,7 +72,10 @@ export const LoginPage = () => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault()
-        dispatch(authSlice.actions.login(signInData))
+
+        if (!isLoading) {
+            dispatch(authSlice.actions.login(signInData))
+        }
     }
 
     const isDisabled = () => !signInData.username || !signInData.password
@@ -108,13 +111,21 @@ export const LoginPage = () => {
                         />
                     </FormControl>
                     <Button
+                        style={{ marginTop: 10, marginBottom: 20 }}
                         disabled={isDisabled()}
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                     >
-                        {isLoading ? <CircularProgress /> : 'Se connecter'}
+                        {isLoading ? (
+                            <CircularProgress
+                                size={25}
+                                style={{ color: 'white' }}
+                            />
+                        ) : (
+                            'Se connecter'
+                        )}
                     </Button>
                 </form>
             </Paper>

@@ -1,3 +1,3 @@
 window.env = {
-    API_ENDPOINT: 'http://localhost:8080/wabg-api',
+    API_ENDPOINT: 'https://api.wabg.oualiyannick.fr',
 }

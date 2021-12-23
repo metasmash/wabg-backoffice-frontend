@@ -1,34 +1,33 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { authSlice } from '../ducks/auth/reducer'
-import { makeStyles, Paper, Typography } from '@material-ui/core'
+import { Title } from '../component/Title'
+import { Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { useAppSelector } from '../ducks/root/hooks'
+import { selectCurrentUser } from '../ducks/user/selector'
 
-const useStyles = makeStyles({
-    title: { fontSize: '30px' },
-    paper: {
-        display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
-        borderRadius: '0% 0% 20% 20%',
-        padding: '30px 30px 30px 30px',
+const useStyle = makeStyles({
+    typography: {
+        fontSize: 18,
     },
 })
 
 export const Home = () => {
-    const classes = useStyles()
-    const dispatch = useDispatch()
-
-    const logout = () => {
-        dispatch(authSlice.actions.logout())
-    }
-
+    const classes = useStyle()
+    const { username } = useAppSelector(selectCurrentUser)
     return (
         <div>
-            <Paper className={classes.paper}>
-                <Typography className={classes.title}>
-                    Bienvenue sur WABG Backoffice
-                </Typography>
-            </Paper>
+            <Title style={{ textAlign: 'center' }}>
+                Bienvenue sur WABG Backoffice: {username} !
+            </Title>
+            <Typography className={classes.typography}>
+                Le backoffice est en travaux.
+            </Typography>
+            <Typography className={classes.typography}>
+                Il vous permettra de gérer vos utilisateurs et accès ainsi que
+                de gérer votre site internet. Si vous souhaitez avoir un certain
+                type d'utilisateur avec des droits spécifiques, ou d'autres
+                fonctionnalités, merci d'en parler au SUPER ADMIN.
+            </Typography>
         </div>
     )
 }
