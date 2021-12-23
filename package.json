@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -11,10 +13,9 @@
     "@types/node": "^16.11.14",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/icons": "^4.11.2",
     "axios": "^0.24.0",
     "connected-react-router": "^6.9.2",
+    "env-cmd": "^10.1.0",
     "lodash": "^4.17.21",
     "react": "16.14.0",
     "react-dom": "^17.0.2",
@@ -27,8 +28,9 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env.local react-scripts start",
+    "build:production": "env-cmd -f .env.production react-scripts build",
+    "build:develop": "env-cmd -f .env.production react-scripts build ./develop",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
