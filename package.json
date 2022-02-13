@@ -30,7 +30,7 @@
   "scripts": {
     "start": "env-cmd -f .env.local react-scripts start",
     "build:production": "env-cmd -f .env.production react-scripts build",
-    "build:develop": "env-cmd -f .env.production react-scripts build ./develop",
+    "build:develop": "env-cmd -f .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
