@@ -132,7 +132,9 @@ export const EditTable = () => {
     }, [])
 
     const handleRefreshIframe = () => {
-        setRefreshIframe((x) => x + 1)
+        setTimeout(() => {
+            setRefreshIframe((x) => x + 1)
+        }, 1000)
     }
 
     const handleEditRow = ({
