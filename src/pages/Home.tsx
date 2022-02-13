@@ -17,16 +17,22 @@ export const Home = () => {
     return (
         <div>
             <Title style={{ textAlign: 'center' }}>
-                Bienvenue sur WABG Backoffice: {username} !
+                Bienvenue sur WABG Backoffice {username} !
             </Title>
             <Typography className={classes.typography}>
-                Le backoffice est en travaux.
+                Bon désolé du retard, c'est un peu tendu la vie en ce moment lol.
             </Typography>
             <Typography className={classes.typography}>
-                Il vous permettra de gérer vos utilisateurs et accès ainsi que
-                de gérer votre site internet. Si vous souhaitez avoir un certain
-                type d'utilisateur avec des droits spécifiques, ou d'autres
-                fonctionnalités, merci d'en parler au SUPER ADMIN.
+                Fonctionnalités disponnibles:
+
+                - Editer du contenu
+                - Ajouter des utilisateurs
+                - Prévisualisation du site web avec rafraichissement automatique en cas de changements.
+
+                Fonctionnalités à venir:
+                - Gestionnaire de fichier (images)
+                - Ajouter une nouvelle entrée sur une table de la base de donnée
+                - Supprimer une entrée de la base de donnée
             </Typography>
         </div>
     )
