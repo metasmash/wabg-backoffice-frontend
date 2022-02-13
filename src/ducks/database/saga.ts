@@ -24,16 +24,32 @@ function* editTableSaga({ payload }: { payload: any }) {
     try {
         const { id, newValues, tableName, idName } = payload
         yield call(services.editTableByName, {
-            id: id || '',
-            newValues: newValues || '',
-            tableName: tableName || '',
+            id,
+            newValues,
+            tableName,
         })
 
         yield put(
             databaseSlice.actions.editTableSuccess({ idName, newValues, id })
         )
     } catch (error) {
-        yield put(databaseSlice.actions.editTableFailed())
+        yield put(databaseSlice.actions.editTableFailed(error))
+    }
+}
+
+function* deleteTableRowByIdSaga({ payload }: { payload: any }) {
+    try {
+        const { id, tableName, idName } = payload
+
+        console.log(payload)
+
+        yield call(services.deleteTableRowById, { id, tableName })
+
+        yield put(
+            databaseSlice.actions.deleteTableRowByIdSuccess({ idName, id })
+        )
+    } catch (error) {
+        yield put(databaseSlice.actions.deleteTableRowByIdFailed(error))
     }
 }
 
@@ -41,4 +57,8 @@ export function* watchDatabase() {
     yield takeLatest(databaseSlice.actions.getTables, getTablesSaga)
     yield takeLatest(databaseSlice.actions.getTableByName, getTableByNameSaga)
     yield takeLatest(databaseSlice.actions.editTable, editTableSaga)
+    yield takeLatest(
+        databaseSlice.actions.deleteTableRowById,
+        deleteTableRowByIdSaga
+    )
 }

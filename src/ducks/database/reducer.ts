@@ -34,11 +34,23 @@ export const databaseSlice = createSlice({
         getTableByNameFailed: (state) => {
             state.isLoading = false
         },
+        deleteTableRowById: (state, { payload }) => {},
+        deleteTableRowByIdSuccess: (state, { payload }) => {
+            const { idName, id } = payload
+            state.currentTable = _.filter(
+                state.currentTable,
+                (x) => x[idName] !== id
+            )
+        },
+        deleteTableRowByIdFailed: (state, { payload }) => {
+            console.log(payload)
+        },
         editTable: (state, { payload }) => {},
-        editTableFailed: (state) => {},
+        editTableFailed: (state, { payload }) => {
+            console.log(payload)
+        },
         editTableSuccess: (state, { payload }) => {
             const { idName, newValues, id } = payload
-            console.log(payload)
             state.currentTable = _.map(state.currentTable, (x) =>
                 `${x[idName]}` === `${id}` ? newValues : x
             )

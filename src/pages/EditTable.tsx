@@ -144,6 +144,7 @@ export const EditTable = () => {
     }) => {
         const idName = _.get(TableIds, tableName)
         const id = _.get(payload, idName)
+
         dispatch(
             databaseSlice.actions.editTable({
                 id,
@@ -151,6 +152,16 @@ export const EditTable = () => {
                 newValues: payload,
                 idName,
             })
+        )
+        handleRefreshIframe()
+    }
+
+    const handleDeleteTableRowByIndex = ({ index }: { index: number }) => {
+        const idName = _.get(TableIds, tableName)
+        const id = _.get(currentTable, `[${index}][${idName}]`)
+
+        dispatch(
+            databaseSlice.actions.deleteTableRowById({ tableName, id, idName })
         )
         handleRefreshIframe()
     }
@@ -170,6 +181,7 @@ export const EditTable = () => {
             {!!currentTable && !isLoading && (
                 <DataTable
                     handleEditRow={handleEditRow}
+                    handleDeleteRowById={handleDeleteTableRowByIndex}
                     data={currentTable}
                     wrapCells
                     enableAction

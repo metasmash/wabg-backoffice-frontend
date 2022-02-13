@@ -26,8 +26,12 @@ export const Home = () => {
                 Bon désolé du retard, c'est un peu tendu la vie en ce moment
                 lol.
             </Typography>
-            <Typography component={'div'} className={classes.typography}>
-                Fonctionnalités disponnibles:{' '}
+            <Typography
+                style={{ fontWeight: 600 }}
+                component={'div'}
+                className={classes.typography}
+            >
+                Fonctionnalités disponnibles:
             </Typography>
 
             <Typography component={'div'} className={classes.typography}>
@@ -36,15 +40,22 @@ export const Home = () => {
             <Typography component={'div'} className={classes.typography}>
                 - Ajouter des utilisateurs
             </Typography>
+            <Typography component={'div'} className={classes.typography}>
+                - Prévisualisation du site web avec rafraichissement automatique
+                en cas de changements
+            </Typography>
             <Typography
                 style={{ marginBottom: 20 }}
                 component={'div'}
                 className={classes.typography}
             >
-                - Prévisualisation du site web avec rafraichissement automatique
-                en cas de changements.
+                - Supprimer une entrée de la base de donnée
             </Typography>
-            <Typography component={'div'} className={classes.typography}>
+            <Typography
+                style={{ fontWeight: 600 }}
+                component={'div'}
+                className={classes.typography}
+            >
                 Fonctionnalités à venir:
             </Typography>
             <Typography component={'div'} className={classes.typography}>
@@ -54,7 +65,7 @@ export const Home = () => {
                 - Ajouter une nouvelle entrée sur une table de la base de donnée
             </Typography>
             <Typography component={'div'} className={classes.typography}>
-                - Supprimer une entrée de la base de donnée
+                - Système de sauvegarde et de restauration de base de donnée
             </Typography>
         </div>
     )

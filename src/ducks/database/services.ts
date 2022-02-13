@@ -18,4 +18,7 @@ export const services = {
     }) {
         return request.put(`/table/${tableName}`, { id, newValues })
     },
+    deleteTableRowById({ id, tableName }: { id: any; tableName: any }) {
+        return request.delete(`/table/${tableName}?id=${id}`)
+    },
 }
