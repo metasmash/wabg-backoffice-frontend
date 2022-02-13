@@ -19,19 +19,41 @@ export const Home = () => {
             <Title style={{ textAlign: 'center' }}>
                 Bienvenue sur WABG Backoffice {username} !
             </Title>
-            <Typography className={classes.typography}>
-                Bon désolé du retard, c'est un peu tendu la vie en ce moment lol.
+            <Typography
+                style={{ marginBottom: 20 }}
+                className={classes.typography}
+            >
+                Bon désolé du retard, c'est un peu tendu la vie en ce moment
+                lol.
             </Typography>
-            <Typography className={classes.typography}>
-                Fonctionnalités disponnibles:
+            <Typography component={'div'} className={classes.typography}>
+                Fonctionnalités disponnibles:{' '}
+            </Typography>
 
+            <Typography component={'div'} className={classes.typography}>
                 - Editer du contenu
+            </Typography>
+            <Typography component={'div'} className={classes.typography}>
                 - Ajouter des utilisateurs
-                - Prévisualisation du site web avec rafraichissement automatique en cas de changements.
-
+            </Typography>
+            <Typography
+                style={{ marginBottom: 20 }}
+                component={'div'}
+                className={classes.typography}
+            >
+                - Prévisualisation du site web avec rafraichissement automatique
+                en cas de changements.
+            </Typography>
+            <Typography component={'div'} className={classes.typography}>
                 Fonctionnalités à venir:
+            </Typography>
+            <Typography component={'div'} className={classes.typography}>
                 - Gestionnaire de fichier (images)
+            </Typography>
+            <Typography component={'div'} className={classes.typography}>
                 - Ajouter une nouvelle entrée sur une table de la base de donnée
+            </Typography>
+            <Typography component={'div'} className={classes.typography}>
                 - Supprimer une entrée de la base de donnée
             </Typography>
         </div>
