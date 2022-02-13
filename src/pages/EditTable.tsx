@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import { IconButton } from '@material-ui/core'
@@ -13,6 +13,27 @@ import DataTable from '../component/DataTable'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { Link } from '../component'
 import { routes } from '../constants'
+
+const TableIds = {
+    associations: 'id_associations',
+    correspondants: 'id_correspondants',
+    droitaffaires: 'id_affaires',
+    droitenvironnement: 'id_environnement',
+    droitimmobilier: 'id_immobilier',
+    droitpersonnes: 'id_personnes',
+    droitprofessionslib: 'id_professionslib',
+    droitrural: 'id_rural',
+    droitsocial: 'id_social',
+    droitvoiesexecution: 'id_voies',
+    equipe: 'id_equipe',
+    honoraires: 'id_honoraires',
+    partenaires: 'id_partenaires',
+    poles: 'id_poles',
+    presse: 'id_presse',
+    responsabilitecivile: 'id_responsabilite',
+    revues: 'id_revues',
+    videos: 'id_videos',
+}
 
 const tables = [
     {
@@ -90,6 +111,8 @@ const tables = [
 ]
 
 export const EditTable = () => {
+    const [refreshIframe, setRefreshIframe] = useState(0)
+
     const dispatch = useDispatch()
     const currentTable = useSelector(selectCurrentTable)
     const isLoading = useSelector(selectIsDatabaseLoading)
@@ -108,6 +131,28 @@ export const EditTable = () => {
         dispatch(databaseSlice.actions.getTableByName(tableName))
     }, [])
 
+    const handleRefreshIframe = () => {
+        setRefreshIframe((x) => x + 1)
+    }
+
+    const handleEditRow = ({
+        payload,
+    }: {
+        payload: { [key: string]: any }
+    }) => {
+        const idName = _.get(TableIds, tableName)
+        const id = _.get(payload, idName)
+        dispatch(
+            databaseSlice.actions.editTable({
+                id,
+                tableName,
+                newValues: payload,
+                idName,
+            })
+        )
+        handleRefreshIframe()
+    }
+
     return (
         <div>
             <div style={{ position: 'absolute' }}>
@@ -120,9 +165,17 @@ export const EditTable = () => {
             <Title style={{ textAlign: 'center' }}>
                 Editer une table: {tableName}
             </Title>
-            {!!currentTable && !isLoading && <DataTable data={currentTable} />}
+            {!!currentTable && !isLoading && (
+                <DataTable
+                    handleEditRow={handleEditRow}
+                    data={currentTable}
+                    wrapCells
+                    enableAction
+                />
+            )}
             {!!getIframeSrc(tableName) && (
                 <iframe
+                    key={refreshIframe}
                     style={{ width: '100%', height: 600 }}
                     src={getIframeSrc(tableName)}
                 />

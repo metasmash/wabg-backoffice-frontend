@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import _ from 'lodash'
 
 interface databaseState {
     tables: Array<string>
@@ -32,6 +33,15 @@ export const databaseSlice = createSlice({
         },
         getTableByNameFailed: (state) => {
             state.isLoading = false
+        },
+        editTable: (state, { payload }) => {},
+        editTableFailed: (state) => {},
+        editTableSuccess: (state, { payload }) => {
+            const { idName, newValues, id } = payload
+            console.log(payload)
+            state.currentTable = _.map(state.currentTable, (x) =>
+                `${x[idName]}` === `${id}` ? newValues : x
+            )
         },
     },
 })

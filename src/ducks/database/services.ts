@@ -7,4 +7,15 @@ export const services = {
     getTableByName(tableName: string) {
         return request.get(`/table/${tableName}`)
     },
+    editTableByName({
+        id,
+        newValues,
+        tableName,
+    }: {
+        id: any
+        newValues: any
+        tableName: any
+    }) {
+        return request.put(`/table/${tableName}`, { id, newValues })
+    },
 }

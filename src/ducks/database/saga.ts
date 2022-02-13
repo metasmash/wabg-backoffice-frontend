@@ -11,7 +11,7 @@ function* getTablesSaga() {
     }
 }
 
-function* getTableByNameSaga({ payload }: { payload: any }) {
+function* getTableByNameSaga({ payload }: { payload: string }) {
     try {
         const [...tables] = yield call(services.getTableByName, payload)
         yield put(databaseSlice.actions.getTableByNameSuccess(tables))
@@ -20,7 +20,25 @@ function* getTableByNameSaga({ payload }: { payload: any }) {
     }
 }
 
+function* editTableSaga({ payload }: { payload: any }) {
+    try {
+        const { id, newValues, tableName, idName } = payload
+        yield call(services.editTableByName, {
+            id: id || '',
+            newValues: newValues || '',
+            tableName: tableName || '',
+        })
+
+        yield put(
+            databaseSlice.actions.editTableSuccess({ idName, newValues, id })
+        )
+    } catch (error) {
+        yield put(databaseSlice.actions.editTableFailed())
+    }
+}
+
 export function* watchDatabase() {
     yield takeLatest(databaseSlice.actions.getTables, getTablesSaga)
     yield takeLatest(databaseSlice.actions.getTableByName, getTableByNameSaga)
+    yield takeLatest(databaseSlice.actions.editTable, editTableSaga)
 }
