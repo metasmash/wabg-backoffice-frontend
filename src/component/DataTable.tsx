@@ -39,7 +39,7 @@ export default function DataTable({
     const [isOpen, setIsOpen] = useState(false)
     const [selectedRow, setSelectedRow] = useState(0)
     const classes = useStyles()
-    const keys = enableAction ? ['action', ..._.keys(data[0])] : _.keys(data[0])
+    const keys = enableAction ? ['editer', ..._.keys(data[0])] : _.keys(data[0])
 
     const handleOpenEditDialog = (selectedRow: number) => {
         setSelectedRow(selectedRow)
@@ -102,7 +102,7 @@ export default function DataTable({
                         {_.map(data, (row, parentKey) => (
                             <TableRow key={parentKey}>
                                 {keys.map((value, key) =>
-                                    value === 'action' ? (
+                                    value === 'editer' ? (
                                         <TableCell
                                             key={key}
                                             component="th"
