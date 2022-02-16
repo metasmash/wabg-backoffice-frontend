@@ -53,6 +53,16 @@ function* deleteTableRowByIdSaga({ payload }: { payload: any }) {
     }
 }
 
+export function* getBackupsSaga() {
+    try {
+        const [...backup] = yield call(services.getBackups)
+
+        yield put(databaseSlice.actions.getBackupsSuccess(backup))
+    } catch (error) {
+        yield put(databaseSlice.actions.getBackupsFailed)
+    }
+}
+
 export function* watchDatabase() {
     yield takeLatest(databaseSlice.actions.getTables, getTablesSaga)
     yield takeLatest(databaseSlice.actions.getTableByName, getTableByNameSaga)
@@ -61,4 +71,5 @@ export function* watchDatabase() {
         databaseSlice.actions.deleteTableRowById,
         deleteTableRowByIdSaga
     )
+    yield takeLatest(databaseSlice.actions.getBackups, getBackupsSaga)
 }

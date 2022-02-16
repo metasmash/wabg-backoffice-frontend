@@ -4,13 +4,19 @@ import _ from 'lodash'
 interface databaseState {
     tables: Array<string>
     currentTable: Array<any>
+    backups: Array<string>
     isLoading: boolean
+    successNotification: string
+    errorNotification: string
 }
 
 const initialState: databaseState = {
     tables: [],
     currentTable: [],
     isLoading: false,
+    backups: [],
+    successNotification: '',
+    errorNotification: '',
 }
 
 export const databaseSlice = createSlice({
@@ -54,6 +60,13 @@ export const databaseSlice = createSlice({
             state.currentTable = _.map(state.currentTable, (x) =>
                 `${x[idName]}` === `${id}` ? newValues : x
             )
+        },
+        getBackups: (state) => {},
+        getBackupsSuccess: (state, { payload }) => {
+            state.backups = payload
+        },
+        getBackupsFailed: (state) => {
+            state.backups = []
         },
     },
 })

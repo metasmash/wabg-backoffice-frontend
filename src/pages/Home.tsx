@@ -4,6 +4,7 @@ import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAppSelector } from '../ducks/root/hooks'
 import { selectCurrentUser } from '../ducks/user/selector'
+import { Notification } from '../component/Notification'
 
 const useStyle = makeStyles({
     typography: {

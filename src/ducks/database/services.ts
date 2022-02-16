@@ -1,13 +1,13 @@
 import request from 'request'
 
 export const services = {
-    getTables() {
+    async getTables() {
         return request.get('/tables')
     },
-    getTableByName(tableName: string) {
+    async getTableByName(tableName: string) {
         return request.get(`/table/${tableName}`)
     },
-    editTableByName({
+    async editTableByName({
         id,
         newValues,
         tableName,
@@ -18,7 +18,16 @@ export const services = {
     }) {
         return request.put(`/table/${tableName}`, { id, newValues })
     },
-    deleteTableRowById({ id, tableName }: { id: any; tableName: any }) {
+    async deleteTableRowById({ id, tableName }: { id: any; tableName: any }) {
         return request.delete(`/table/${tableName}?id=${id}`)
+    },
+    async getBackups(): Promise<Array<string>> {
+        return request.get('/backup')
+    },
+    async saveBackup() {
+        return request.put('/backup')
+    },
+    async loadBackup(fileName: string) {
+        return request.post('/backup', { fileName })
     },
 }

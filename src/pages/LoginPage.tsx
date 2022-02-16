@@ -11,7 +11,6 @@ import {
 import wabgLogo from '../images/wabg-logo.png'
 import { useAppDispatch, useAppSelector } from '../ducks/root/hooks'
 import { selectAuthError, selectIsAuthLoading } from '../ducks/auth/selector'
-import { PopUp } from '../component/PopUp'
 import { authSlice } from '../ducks/auth/reducer'
 
 const useStyles = makeStyles({
@@ -58,7 +57,6 @@ export const LoginPage = () => {
     const [signInData, setSignInData] = useState({ username: '', password: '' })
 
     const dispatch = useAppDispatch()
-    const error = useAppSelector(selectAuthError)
     const isLoading = useAppSelector(selectIsAuthLoading)
 
     const handleChangeSignInData = (event: any) => {
@@ -129,10 +127,6 @@ export const LoginPage = () => {
                     </Button>
                 </form>
             </Paper>
-            <PopUp
-                message={error}
-                onCloseCallback={() => dispatch(authSlice.actions.clearError())}
-            />
         </Container>
     )
 }

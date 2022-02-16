@@ -5,10 +5,7 @@ import { IconButton } from '@material-ui/core'
 import { Title } from '../component/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import { databaseSlice } from '../ducks/database/reducer'
-import {
-    selectCurrentTable,
-    selectIsDatabaseLoading,
-} from '../ducks/database/selector'
+import { selectCurrentTable, selectIsLoading } from '../ducks/database/selector'
 import DataTable from '../component/DataTable'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { Link } from '../component'
@@ -115,7 +112,7 @@ export const EditTable = () => {
 
     const dispatch = useDispatch()
     const currentTable = useSelector(selectCurrentTable)
-    const isLoading = useSelector(selectIsDatabaseLoading)
+    const isLoading = useSelector(selectIsLoading)
 
     const params: any = useParams()
 
