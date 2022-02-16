@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import _ from 'lodash'
+import { addNotification } from '../../component/Notification'
 
 interface databaseState {
     tables: Array<string>
@@ -67,6 +68,43 @@ export const databaseSlice = createSlice({
         },
         getBackupsFailed: (state) => {
             state.backups = []
+        },
+        saveBackup: (state) => {
+            state.isLoading = true
+        },
+        saveBackupSuccess: (state, { payload }) => {
+            state.backups = [payload, ...state.backups]
+            state.isLoading = false
+            addNotification({
+                notificationType: 'success',
+                message: 'Backup ajouté avec succès!',
+            })
+        },
+        saveBackupFailed: (state, { payload }) => {
+            state.isLoading = false
+            addNotification({
+                notificationType: 'warning',
+                message:
+                    'Une erreur est survenue lors de la création du backup.',
+            })
+        },
+        loadBackup: (state, { payload }) => {
+            state.isLoading = true
+        },
+        loadBackupSuccess: (state, { payload }) => {
+            addNotification({
+                notificationType: 'success',
+                message: `Backup ${payload} chargé avec succès.`,
+            })
+            state.isLoading = false
+        },
+        loadBackupFailed: (state) => {
+            addNotification({
+                notificationType: 'warning',
+                message:
+                    'Error lors du chargement du backup. Veuillez contacter votre SUPER ADMIN de toute urgence.',
+            })
+            state.isLoading = false
         },
     },
 })

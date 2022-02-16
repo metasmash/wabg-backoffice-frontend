@@ -17,6 +17,7 @@
     "connected-react-router": "^6.9.2",
     "env-cmd": "^10.1.0",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "react": "17.0.1",
     "react-dom": "^17.0.2",
     "react-notifications-component": "^3.4.1",
