@@ -107,12 +107,13 @@ export default function DataTable({
                     <TableHead>
                         <TableRow>
                             {_.map(keys, (value: any, key: any) =>
-                                key === 0 ? (
+                                key === keys.length - 1 ? (
                                     <TableCell
                                         key={key}
                                         style={{
                                             fontWeight: 'bold',
                                         }}
+                                        align="left"
                                     >
                                         {value}
                                     </TableCell>
@@ -122,7 +123,7 @@ export default function DataTable({
                                             fontWeight: 'bold',
                                         }}
                                         key={key}
-                                        align="right"
+                                        align="left"
                                     >
                                         {value}
                                     </TableCell>
@@ -190,6 +191,7 @@ export default function DataTable({
                                             key={key}
                                             component="th"
                                             scope="row"
+                                            align="left"
                                         >
                                             <div
                                                 style={
@@ -199,7 +201,7 @@ export default function DataTable({
                                                               textOverflow:
                                                                   'ellipsis',
                                                               maxWidth: 100,
-                                                              height: 200,
+                                                              height: 100,
                                                               overflow:
                                                                   'hidden',
                                                           }
@@ -210,16 +212,15 @@ export default function DataTable({
                                             </div>
                                         </TableCell>
                                     ) : (
-                                        <TableCell key={key} align="right">
+                                        <TableCell key={key} align="left">
                                             <div
                                                 style={
                                                     wrapCells
                                                         ? {
-                                                              width: '100%',
                                                               textOverflow:
                                                                   'ellipsis',
                                                               maxWidth: 100,
-                                                              height: 200,
+                                                              height: 100,
                                                               overflow:
                                                                   'hidden',
                                                           }

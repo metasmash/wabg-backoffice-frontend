@@ -53,6 +53,34 @@ function* deleteTableRowByIdSaga({ payload }: { payload: any }) {
     }
 }
 
+export function* getBackupsSaga() {
+    try {
+        const [...backup] = yield call(services.getBackups)
+
+        yield put(databaseSlice.actions.getBackupsSuccess(backup))
+    } catch (error) {
+        yield put(databaseSlice.actions.getBackupsFailed)
+    }
+}
+
+export function* saveBackupSaga() {
+    try {
+        const { fileName } = yield call(services.saveBackup)
+        yield put(databaseSlice.actions.saveBackupSuccess(fileName))
+    } catch (error) {
+        yield put(databaseSlice.actions.saveBackupFailed)
+    }
+}
+
+export function* loadBackupSaga({ payload }: { payload: string }) {
+    try {
+        yield call(services.loadBackup, payload)
+        yield put(databaseSlice.actions.loadBackupSuccess(payload))
+    } catch (error) {
+        yield put(databaseSlice.actions.loadBackupFailed)
+    }
+}
+
 export function* watchDatabase() {
     yield takeLatest(databaseSlice.actions.getTables, getTablesSaga)
     yield takeLatest(databaseSlice.actions.getTableByName, getTableByNameSaga)
@@ -61,4 +89,7 @@ export function* watchDatabase() {
         databaseSlice.actions.deleteTableRowById,
         deleteTableRowByIdSaga
     )
+    yield takeLatest(databaseSlice.actions.getBackups, getBackupsSaga)
+    yield takeLatest(databaseSlice.actions.saveBackup, saveBackupSaga)
+    yield takeLatest(databaseSlice.actions.loadBackup, loadBackupSaga)
 }

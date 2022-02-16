@@ -1,5 +1,13 @@
 import React from 'react'
-import { Grid, makeStyles, Paper } from '@material-ui/core'
+import {
+    Backdrop,
+    CircularProgress,
+    Grid,
+    makeStyles,
+    Paper,
+} from '@material-ui/core'
+import { selectIsLoading } from '../ducks/root/selectors'
+import { useAppSelector } from '../ducks/root/hooks'
 
 const useStyles = makeStyles({
     paper: {
@@ -14,8 +22,17 @@ const useStyles = makeStyles({
 
 export const Layout = ({ children }: { children: any }) => {
     const classes = useStyles()
+    const isLoading = useAppSelector(selectIsLoading)
+
     return (
         <Grid container>
+            <Backdrop open={isLoading} style={{ zIndex: 10 }}>
+                <CircularProgress
+                    size={300}
+                    thickness={2}
+                    style={{ color: '#ff8c00' }}
+                />
+            </Backdrop>
             <Grid item xs={2} />
             <Grid item xs={8}>
                 <Paper elevation={5} className={classes.paper}>
