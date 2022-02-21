@@ -17,11 +17,11 @@ import { routes } from '../constants'
 import { getCurrentPath } from '../ducks/root/hooks'
 import { useDispatch } from 'react-redux'
 import { authSlice } from '../ducks/auth/reducer'
-import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import TocIcon from '@material-ui/icons/Toc'
 import PeopleIcon from '@material-ui/icons/People'
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore'
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile'
 
 const useStyle = makeStyles({
     typography: {
@@ -65,18 +65,15 @@ export const HeaderBar = () => {
             path: routes.BACKUP,
             icon: <SettingsBackupRestoreIcon className={classes.iconXs} />,
         },
+        {
+            text: 'Fichiers',
+            path: routes.FILES,
+            icon: <InsertDriveFileIcon className={classes.iconXs} />,
+        },
     ]
 
     const handleLogOut = () => {
         dispatch(authSlice.actions.logout())
-    }
-
-    const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
-
-    const handleCloseMenu = () => {
-        setAnchorEl(null)
     }
 
     return (

@@ -6,4 +6,5 @@ export const routes = {
     USERS: '/users',
     TABLE_EDIT: '/tables/:tableName',
     BACKUP: '/backup',
+    FILES: '/files',
 }
