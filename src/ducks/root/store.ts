@@ -11,7 +11,7 @@ export const history = createBrowserHistory()
 export const store = configureStore({
     reducer: rootReducer(history),
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({ thunk: false }).concat(
+        getDefaultMiddleware({ thunk: false, serializableCheck: false }).concat(
             routerMiddleware(history),
             sagaMiddleware
         ),

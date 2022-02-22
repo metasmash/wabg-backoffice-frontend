@@ -21,5 +21,11 @@ export const filesSlice = createSlice({
         getFilesFailed(state) {
             state.currentFiles = []
         },
+        uploadFile(state, { payload }) {},
+        uploadFileSuccess(state) {},
+        uploadFileFailed(state) {},
+        deleteFile(state, { payload }) {},
+        deleteFileSuccess(state) {},
+        deleteFileFailed(state) {},
     },
 })

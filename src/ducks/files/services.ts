@@ -13,4 +13,19 @@ export const services = {
             },
         })
     },
+    async uploadFile(file: File) {
+        const formData = new FormData()
+        formData.append('file', file)
+
+        try {
+            return await request({
+                method: 'post',
+                url: '/file',
+                data: formData,
+                headers: { 'Content-Type': 'multipart/form-data' },
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }

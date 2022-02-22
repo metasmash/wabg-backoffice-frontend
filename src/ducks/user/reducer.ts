@@ -43,7 +43,7 @@ export const userSlice = createSlice({
             state.isLoading = true
         },
         createAdminSuccess: (state, { payload: { username, role } }) => {
-            state.isLoading = true
+            state.isLoading = false
             state.users = [...state.users, { username: username, role: role }]
         },
         createSuperAdmin: (state, { payload: { username, password } }) => {},
