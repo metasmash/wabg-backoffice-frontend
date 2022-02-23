@@ -165,13 +165,11 @@ export const EditTable = () => {
 
     return (
         <div>
-            <div style={{ position: 'absolute' }}>
-                <Link to={routes.TABLES}>
-                    <IconButton>
-                        <ArrowBack style={{ fontSize: 40 }} />
-                    </IconButton>
-                </Link>
-            </div>
+            <Link to={routes.TABLES}>
+                <IconButton>
+                    <ArrowBack style={{ fontSize: 40 }} />
+                </IconButton>
+            </Link>
             <Title style={{ textAlign: 'center' }}>
                 Editer une table: {tableName}
             </Title>

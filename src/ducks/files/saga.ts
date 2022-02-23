@@ -7,8 +7,19 @@ function* getFilesSaga({ payload }: { payload: string }) {
     yield put(filesSlice.actions.getFilesSuccess(currentFiles))
 }
 
-function* uploadFileSaga({ payload }: { payload: File }) {
-    console.log('ok')
+function* uploadFileSaga({
+    payload,
+}: {
+    payload: { file: File; path: string }
+}) {
+    try {
+        const { file, path } = payload
+        yield call(services.uploadFile, { file, path })
+        yield put(filesSlice.actions.getFiles(path))
+        yield put(filesSlice.actions.uploadFileSuccess(file.name))
+    } catch (error) {
+        yield put(filesSlice.actions.uploadFileFailed(payload.file.name))
+    }
 }
 
 export function* watchFiles() {

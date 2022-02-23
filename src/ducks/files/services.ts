@@ -13,16 +13,18 @@ export const services = {
             },
         })
     },
-    async uploadFile(file: File) {
+    async uploadFile({ file, path }: { file: File; path: string }) {
         const formData = new FormData()
         formData.append('file', file)
 
+        console.log({ file, formData })
+
         try {
-            return await request({
-                method: 'post',
-                url: '/file',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' },
+            return await request.post('/files', formData, {
+                params: { path },
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             })
         } catch (error) {
             console.log(error)
