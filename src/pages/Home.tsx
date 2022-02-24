@@ -47,6 +47,9 @@ export const Home = () => {
             <Typography component={'div'} className={classes.typography}>
                 - Supprimer une entrée de la base de donnée
             </Typography>
+            <Typography component={'div'} className={classes.typography}>
+                - Gestionnaire de fichier (ATTENTION! EXPERIMENTAL)
+            </Typography>
             <Typography
                 style={{ marginBottom: 20 }}
                 component={'div'}
@@ -77,9 +80,6 @@ export const Home = () => {
                 className={classes.typography}
             >
                 Fonctionnalités à venir:
-            </Typography>
-            <Typography component={'div'} className={classes.typography}>
-                - Gestionnaire de fichier (images)
             </Typography>
         </div>
     )
