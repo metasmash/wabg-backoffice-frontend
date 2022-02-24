@@ -8,7 +8,6 @@ import { push } from 'connected-react-router'
 import { IconButton, Typography } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 import ArrowBack from '@material-ui/icons/ArrowBack'
-import { Link } from '../component'
 
 export const Files = () => {
     const history = useHistory()
@@ -38,6 +37,10 @@ export const Files = () => {
         history.goBack()
     }
 
+    const handleDeleteFile = (path: string) => {
+        dispatch(filesSlice.actions.deleteFile({ path }))
+    }
+
     const isFileFoolder = (file: string) => _.last(_.split(file, '')) === '/'
 
     return (
@@ -48,7 +51,7 @@ export const Files = () => {
             <Title style={{ textAlign: 'center' }}>
                 Gestionnaire de fichiers: {path}
             </Title>
-            <form onSubmit={handleSubmit}>
+            <form style={{ marginBottom: 10 }} onSubmit={handleSubmit}>
                 <input type="file" onChange={handleFileSelect} />
                 <input type="submit" value="Upload File" />
             </form>
@@ -70,6 +73,16 @@ export const Files = () => {
                         >
                             {isRootPath ? file : _.last(_.split(file, path))}
                         </span>
+                        {!isFileFoolder(file) && (
+                            <span
+                                onClick={() => {
+                                    handleDeleteFile(file)
+                                }}
+                                style={{ color: 'red', cursor: 'pointer' }}
+                            >
+                                Supprimer
+                            </span>
+                        )}
                     </Typography>
                 ))}
             </div>

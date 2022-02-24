@@ -1,4 +1,5 @@
 import { takeLatest, put, call } from 'redux-saga/effects'
+import _ from 'lodash'
 import { services } from './services'
 import { filesSlice } from './reducer'
 
@@ -22,7 +23,22 @@ function* uploadFileSaga({
     }
 }
 
+function* deleteFileSaga({ payload }: { payload: { path: string } }) {
+    try {
+        const { path } = payload
+        console.log(path)
+        const folderPath = _.join(_.dropRight(_.split(path, '/')), '/')
+        yield call(services.deleteFile, path)
+        yield put(filesSlice.actions.getFiles(folderPath))
+        yield put(filesSlice.actions.deleteFileSuccess())
+    } catch (error) {
+        console.log(error)
+        yield put(filesSlice.actions.deleteFileFailed())
+    }
+}
+
 export function* watchFiles() {
     yield takeLatest(filesSlice.actions.getFiles, getFilesSaga)
     yield takeLatest(filesSlice.actions.uploadFile, uploadFileSaga)
+    yield takeLatest(filesSlice.actions.deleteFile, deleteFileSaga)
 }

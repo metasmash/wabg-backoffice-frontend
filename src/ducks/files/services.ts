@@ -30,4 +30,8 @@ export const services = {
             console.log(error)
         }
     },
+
+    async deleteFile(path: string) {
+        return await request.delete('/files', { params: { path } })
+    },
 }

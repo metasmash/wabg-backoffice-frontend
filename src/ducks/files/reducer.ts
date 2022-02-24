@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import _ from 'lodash'
 import { addNotification } from '../../component/Notification'
 
 interface filesState {
@@ -52,10 +51,18 @@ export const filesSlice = createSlice({
             state.isFileLoading = true
         },
         deleteFileSuccess(state) {
+            addNotification({
+                notificationType: 'success',
+                message: 'Fichier supprimé avec succès!',
+            })
             state.isFileLoading = false
         },
         deleteFileFailed(state) {
             state.isFileLoading = false
+            addNotification({
+                notificationType: 'danger',
+                message: 'Erreur lors de la supression du fichier.',
+            })
         },
     },
 })
