@@ -28,13 +28,21 @@ function* createAdminSaga({
     payload: { username: string; password: string }
 }) {
     try {
-        yield call(services.createAdmin, username.toLowerCase(), password)
-        yield put(
-            userSlice.actions.createAdminSuccess({
-                username: username.toLowerCase(),
-                role: RoleType.ADMIN,
-            })
-        )
+        if (Boolean(username) && Boolean(password)) {
+            yield call(services.createAdmin, username.toLowerCase(), password)
+            yield put(
+                userSlice.actions.createAdminSuccess({
+                    username: username.toLowerCase(),
+                    role: RoleType.ADMIN,
+                })
+            )
+        } else {
+            yield put(
+                userSlice.actions.createUserFailed(
+                    "Vous n'avez pas les droits nécessaires."
+                )
+            )
+        }
     } catch (error) {
         yield put(
             userSlice.actions.createUserFailed(

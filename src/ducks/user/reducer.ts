@@ -49,6 +49,7 @@ export const userSlice = createSlice({
         createSuperAdmin: (state, { payload: { username, password } }) => {},
         createSuperAdminSuccess: () => {},
         createUserFailed: (state, { payload }) => {
+            state.isLoading = false
             state.error = payload
         },
         deleteUser: (state, { payload }) => {
