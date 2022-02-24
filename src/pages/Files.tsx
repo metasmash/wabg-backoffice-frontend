@@ -41,7 +41,7 @@ export const Files = () => {
         dispatch(filesSlice.actions.deleteFile({ path }))
     }
 
-    const isFileFoolder = (file: string) => _.last(_.split(file, '')) === '/'
+    const isFileFoolder = (file: string) => _.split(file, '.').length === 1
 
     return (
         <div>
