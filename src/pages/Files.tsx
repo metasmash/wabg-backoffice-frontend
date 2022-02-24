@@ -8,6 +8,7 @@ import { push } from 'connected-react-router'
 import { IconButton, Typography } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 import ArrowBack from '@material-ui/icons/ArrowBack'
+import FolderIcon from '@material-ui/icons/Folder'
 
 export const Files = () => {
     const history = useHistory()
@@ -30,7 +31,11 @@ export const Files = () => {
 
     const handleSubmit = (event: any) => {
         event.preventDefault()
-        dispatch(filesSlice.actions.uploadFile({ file: selectedFile, path }))
+        if (!!selectedFile) {
+            dispatch(
+                filesSlice.actions.uploadFile({ file: selectedFile, path })
+            )
+        }
     }
 
     const handleGoBack = () => {
@@ -57,7 +62,18 @@ export const Files = () => {
             </form>
             <div>
                 {_.map(currentFiles, (file, key) => (
-                    <Typography key={key}>
+                    <Typography
+                        key={key}
+                        style={{
+                            border: 'solid 1px #ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            background: Boolean(key % 2)
+                                ? '#f3ff8520'
+                                : '#faff2320',
+                        }}
+                    >
+                        {isFileFoolder(file) && <FolderIcon color="primary" />}
                         <span
                             style={{
                                 width: 'auto',
