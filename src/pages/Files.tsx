@@ -24,7 +24,6 @@ export const Files = () => {
     const [selectedFileForDeletion, setSelectedFileForDeletion] = useState('')
     const location = useLocation()
     const path = _.last(_.split(location.pathname, 'files')) || '/'
-    const isRootPath = path === '/'
     const dispatch = useAppDispatch()
     const currentFiles = useAppSelector(getCurrentFiles)
 
