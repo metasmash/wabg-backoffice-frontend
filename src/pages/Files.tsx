@@ -9,17 +9,39 @@ import { IconButton, Typography } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import FolderIcon from '@material-ui/icons/Folder'
+import { useDeleteDialog } from '../component/useDeleteDialog'
+
+const getCurrentFileName = (path: string) =>
+    _.last(
+        path.split('/').reduce((final: Array<string>, current: string) => {
+            return current === '' ? final : [...final, current]
+        }, [])
+    )
 
 export const Files = () => {
     const history = useHistory()
     const [selectedFile, setSelectedFile] = React.useState(null)
+    const [selectedFileForDeletion, setSelectedFileForDeletion] = useState('')
     const location = useLocation()
     const path = _.last(_.split(location.pathname, 'files')) || '/'
     const isRootPath = path === '/'
     const dispatch = useAppDispatch()
     const currentFiles = useAppSelector(getCurrentFiles)
 
-    console.log(window.location.pathname)
+    const handleDeleteFile = () => {
+        dispatch(
+            filesSlice.actions.deleteFile({ path: selectedFileForDeletion })
+        )
+    }
+
+    const { DeleteDialog, handleOpenDeleteDialog } = useDeleteDialog({
+        title: 'Supprimer un fichier',
+        description: `Attention! Vous êtes sur le point de supprimer
+définitivement le fichier ${selectedFileForDeletion}. Êtes-vous
+sûr de votre choix?`,
+        importantDescription: ` Veuillez noter que supprimer un fichier va altérer le fonctionnement de votre site web. Êtes-vous sûr de votre choix?`,
+        confirmCallback: handleDeleteFile,
+    })
 
     useEffect(() => {
         dispatch(filesSlice.actions.getFiles(path))
@@ -40,10 +62,6 @@ export const Files = () => {
 
     const handleGoBack = () => {
         history.goBack()
-    }
-
-    const handleDeleteFile = (path: string) => {
-        dispatch(filesSlice.actions.deleteFile({ path }))
     }
 
     const isFileFoolder = (file: string) => _.split(file, '.').length === 1
@@ -87,12 +105,13 @@ export const Files = () => {
                                 }
                             }}
                         >
-                            {isRootPath ? file : _.last(_.split(file, path))}
+                            {getCurrentFileName(file)}
                         </span>
                         {!isFileFoolder(file) && (
                             <span
                                 onClick={() => {
-                                    handleDeleteFile(file)
+                                    setSelectedFileForDeletion(file)
+                                    handleOpenDeleteDialog()
                                 }}
                                 style={{ color: 'red', cursor: 'pointer' }}
                             >
@@ -102,6 +121,7 @@ export const Files = () => {
                     </Typography>
                 ))}
             </div>
+            {DeleteDialog}
         </div>
     )
 }

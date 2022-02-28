@@ -20,6 +20,7 @@ import {
     Typography,
 } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
+import { useDeleteDialog } from './useDeleteDialog'
 
 const useStyles = makeStyles({
     table: {
@@ -66,15 +67,6 @@ export default function DataTable({
         setIsOpen(false)
     }
 
-    const handleOpenDeleteDialog = (selectedRow: number) => {
-        setSelectedRow(selectedRow)
-        setIsDeleteDialogOpen(true)
-    }
-
-    const handleCloseDeleteDialog = () => {
-        setIsDeleteDialogOpen(false)
-    }
-
     const handleSubmitForm = (e: any) => {
         e.preventDefault()
         const payload = _.reduce(
@@ -96,9 +88,17 @@ export default function DataTable({
     const handleDelete = () => {
         if (handleDeleteRowById) {
             handleDeleteRowById({ index: selectedRow })
-            handleCloseDeleteDialog()
         }
     }
+
+    const { DeleteDialog, handleOpenDeleteDialog } = useDeleteDialog({
+        title: 'Editer une ligne',
+        description: `Attention! Vous êtes sur le point de supprimer
+définitivement une ligne de la base de donnée. Êtes-vous
+sûr de votre choix?`,
+        importantDescription: ` Veuillez noter que supprimer une entrée peut altérer le comportement d'autres tables!!!`,
+        confirmCallback: handleDelete,
+    })
 
     return (
         <React.Fragment>
@@ -171,9 +171,10 @@ export default function DataTable({
                                                         height: 40,
                                                     }}
                                                     onClick={() => {
-                                                        handleOpenDeleteDialog(
+                                                        setSelectedRow(
                                                             parentKey
                                                         )
+                                                        handleOpenDeleteDialog()
                                                     }}
                                                 >
                                                     <Delete
@@ -276,65 +277,7 @@ export default function DataTable({
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={isDeleteDialogOpen}>
-                <IconButton
-                    onClick={handleCloseDeleteDialog}
-                    style={{ position: 'absolute', top: 5, right: 5 }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <DialogTitle style={{ width: 500 }}>
-                    <Typography style={{ fontSize: 30 }}>
-                        Supprimer une ligne
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Typography>
-                        Attention! Vous êtes sur le point de supprimer
-                        définitivement une ligne de la base de donnée. Êtes-vous
-                        sûr de votre choix?
-                    </Typography>
-                    <Typography
-                        style={{
-                            marginTop: 20,
-                            color: '#AB2A26',
-                            fontWeight: 600,
-                        }}
-                        component="div"
-                    >
-                        Veuillez noter que supprimer une entrée peut altérer le
-                        comportement d'autres tables!!!
-                    </Typography>
-                    <div
-                        style={{
-                            width: '100%',
-                            textAlign: 'center',
-                            marginTop: 50,
-                        }}
-                    >
-                        <Button
-                            style={{
-                                height: 50,
-                                color: 'white',
-                                width: '40%',
-                                margin: 10,
-                            }}
-                            color="primary"
-                            variant={'contained'}
-                            onClick={handleCloseDeleteDialog}
-                        >
-                            Annuler
-                        </Button>
-                        <Button
-                            onClick={handleDelete}
-                            className={classes.deleteButton}
-                            variant={'contained'}
-                        >
-                            Supprimer
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
+            {DeleteDialog}
         </React.Fragment>
     )
 }
