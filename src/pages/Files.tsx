@@ -24,6 +24,7 @@ export const Files = () => {
     const [selectedFileForDeletion, setSelectedFileForDeletion] = useState('')
     const location = useLocation()
     const path = _.last(_.split(location.pathname, 'files')) || '/'
+    const isRootPath = path === '/'
     const dispatch = useAppDispatch()
     const currentFiles = useAppSelector(getCurrentFiles)
 
@@ -67,9 +68,14 @@ sûr de votre choix?`,
 
     return (
         <div>
-            <IconButton onClick={handleGoBack}>
-                <ArrowBack style={{ fontSize: 40 }} />
-            </IconButton>
+            {!isRootPath && (
+                <IconButton
+                    style={{ position: 'absolute' }}
+                    onClick={handleGoBack}
+                >
+                    <ArrowBack style={{ fontSize: 40 }} />
+                </IconButton>
+            )}
             <Title style={{ textAlign: 'center' }}>
                 Gestionnaire de fichiers: {path}
             </Title>
